@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>จัดการหนังสือ - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">⚙️ ระบบจัดการห้องสมุด (Admin)</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">กลับหน้าหลัก</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">เพิ่มหนังสือใหม่</div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/addBook}" th:object="${newBook}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">ชื่อหนังสือ</label>
+                                <input type="text" th:field="*{title}" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">ผู้แต่ง</label>
+                                <input type="text" th:field="*{author}" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">จำนวนเล่ม</label>
+                                <input type="number" th:field="*{availableCopies}" class="form-control" required min="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">บันทึกข้อมูล</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5>คลังหนังสือทั้งหมด</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ชื่อหนังสือ</th>
+                                    <th>ผู้แต่ง</th>
+                                    <th>คงเหลือ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="book : ${books}">
+                                    <th th:text="${book.id}"></th>
+                                    <td th:text="${book.title}"></td>
+                                    <td th:text="${book.author}"></td>
+                                    <td th:text="${book.availableCopies}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
